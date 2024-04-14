@@ -14,8 +14,12 @@ contract Faucet is AccessControl, Freezable {
 
     // bytes32 public constant CLIENT_ROLE = keccak256("CLIENT_ROLE");
 
-    constructor(address payable _owner) Freezable(_owner) {
-        _grantRole(DEFAULT_ADMIN_ROLE, _owner);
+    /**
+     * @dev Grants `DEFAULT_ADMIN_ROLE` and `OWNER_ROLE` to the account that
+     * deploys the contract.
+     */
+    constructor() payable Freezable(msg.sender) {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
     event Withdrawal(address indexed from, uint amount, uint when);
@@ -24,7 +28,13 @@ contract Faucet is AccessControl, Freezable {
         require(amount <= 1 ether);
         require(address(this).balance >= amount);
 
-        // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
+        console.log(
+            "Faucent withdraw %s to %s on %s",
+            amount,
+            msg.sender,
+            block.timestamp
+        );
+
         emit Withdrawal(msg.sender, amount, block.timestamp);
 
         payable(msg.sender).transfer(amount);

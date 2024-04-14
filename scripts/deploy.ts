@@ -6,14 +6,14 @@ async function main() {
 
   const lockedAmount = ethers.parseEther("1000");
 
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
+  const faucet = await ethers.deployContract("Faucet", [], {
     value: lockedAmount,
   });
 
-  await lock.waitForDeployment();
+  await faucet.waitForDeployment();
 
   console.log(
-    `Lock with ${ethers.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
+    `Lock with ${ethers.formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${faucet.target}`
   );
 }
 
