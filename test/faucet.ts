@@ -29,5 +29,13 @@ describe("Faucet", function () {
 
       expect(await ethers.provider.getBalance(otherAccount)).to.greaterThan(ethers.parseEther("10000"));
     });
+
+    it("Should not able to withdraw more than 1 ether", async function () {
+      const { faucet, owner, otherAccount, lockedAmount } = await loadFixture(deployFaucetFixture);
+
+      await expect(faucet.connect(otherAccount).withdraw(ethers.parseEther("2"))).to.be.revertedWith(
+        "You can only withdraw up to 1 ether"
+      );
+    });
   });
 });

@@ -25,7 +25,7 @@ contract Faucet is AccessControl, Freezable {
     event Withdrawal(address indexed from, uint amount, uint when);
 
     function withdraw(uint amount) public payable notFrozen {
-        require(amount <= 1 ether);
+        require(amount <= 1 ether, "You can only withdraw up to 1 ether");
         require(address(this).balance >= amount);
 
         console.log(
