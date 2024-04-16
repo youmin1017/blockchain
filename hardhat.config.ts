@@ -17,7 +17,7 @@ const config: HardhatUserConfig = {
     },
   },
   gasReporter: {
-    enabled: false,
+    // enabled: false,
     coinmarketcap: process.env.COINMARKETCAP_API_KEY,
   },
 };
