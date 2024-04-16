@@ -1,5 +1,9 @@
 {
   "license": "UNLICENSED",
+  "scripts": {
+    "compile": "bunx hardhat compile",
+    "test": "bunx hardhat test"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^5.0.2",
     "dotenv": "^16.4.5"
@@ -22,7 +26,7 @@
     "chai": "^4.2.0",
     "ethers": "^6.11.1",
     "hardhat": "^2.22.2",
-    "hardhat-gas-reporter": "^1.0.8",
+    "hardhat-gas-reporter": "^2.1.1",
     "solidity-coverage": "^0.8.0",
     "ts-node": ">=8.0.0",
     "typechain": "^8.3.0",
