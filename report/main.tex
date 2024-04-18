@@ -1,0 +1,72 @@
+\documentclass[12pt,a4paper]{article}
+
+% xeCJK
+\usepackage[]{xeCJK}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Times New Roman}
+\xeCJKDeclareSubCJKBlock{SIP}{
+    "73C9 -> "73C9, % 珉
+}
+\setCJKmainfont[]{Noto Serif TC}
+\setCJKmainfont[SIP, Path=fonts/]{NotoSerifTC-Regular-Subset.otf}
+\setCJKmonofont[]{Noto Serif TC}
+
+% Set image path
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{float}
+\usepackage{url}
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage[backend=bibtex,sorting=nty]{biblatex}
+\addbibresource{ref.bib}
+
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{4}
+
+
+\title{Homework-2: Programming a better Faucet contract using Hardhat (on
+Hardhat Network and Sepolia)}
+\author{123吳侑珉 109321021、涂价弘 109321019}
+\begin{document} \date{} \maketitle
+
+\tableofcontents
+
+\pagebreak
+
+\section{Abstract}
+
+延續作業一銀行管理系統的智能合約，將其從一份大合約拆分成多份小合約、透過
+Openzeppelin\cite{openzeppelin}進行Access Control管理銀行管理員與客戶、透過自訂的Freezable使銀行合
+約能夠關機、透過Hardhat\cite{hardhat}進行Local Network的合約測試與部署，並且利用Hardhat Gas
+Reporter\cite{hardhat-gas-reporter}來觀察合約的部署與函式Gas花費狀況。
+
+% \section{}
+
+\input{chapter1.tex}
+
+% Image Example
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics*[width=\textwidth]{CPE.jpeg}
+%     \caption{CPE證明}
+%     \label{fig:cpe}
+% \end{figure}
+
+% This is citation example\cite{ioi}
+
+\pagebreak
+\printbibliography
+
+\end{document}
