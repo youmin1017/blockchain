@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 // 設定情境: 演唱會門票
 contract ConcertTicket is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     mapping(uint256 => Ticket) private _tickets;
-    mapping(address => uint256[]) private owned_tickets;
+    mapping(address => uint256[]) private owned_tickets; // 只記錄用戶，不紀錄管理者
 
     uint256[] private sold_tokenIds;
     uint256[] private buyable_tokenIds;
@@ -124,6 +124,7 @@ contract ConcertTicket is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         }
     }
 
+    // 查詢相關資料
     function getBuyableTickets() public view returns (uint256[] memory) {
         return buyable_tokenIds;
     }
@@ -138,9 +139,10 @@ contract ConcertTicket is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         return _tickets[tokenId];
     }
 
-    // For clients
-    function getOwnedTickets() public view returns (uint256[] memory) {
-        return owned_tickets[msg.sender];
+    function getOwnedTickets(
+        address client
+    ) public view returns (uint256[] memory) {
+        return owned_tickets[client];
     }
 
     // 購買指定門票 => 指定 tokenId
