@@ -97,7 +97,7 @@ describe("Concert ticket management system with ERC721", function () {
 
 			const account1Ticket = ticket.connect(account1);
 			await account1Ticket.buyTicket(targetTicket, { value: 100 });
-			await account1Ticket.transferOnlyTicketOwner(account2, targetTicket);
+			await account1Ticket.transferTicketOnlyOwner(account2, targetTicket);
 
 			expect(await ticket.ownerOf(targetTicket)).to.equal(account2.address);
 		});

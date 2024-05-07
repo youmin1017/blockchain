@@ -48,7 +48,7 @@ contract ConcertTicket is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         bool expired;
         // 座位資訊
         uint area;
-        uint seet;
+        uint seat;
         uint _type; // 全票，VIP套票
         uint256 price;
     }
@@ -64,14 +64,7 @@ contract ConcertTicket is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     }
 
     modifier ticketNotSold(uint256 tokenId) {
-        bool sold = false;
-
-        for (uint i = 0; i < sold_tokenIds.length; i++) {
-            if (tokenId == sold_tokenIds[i]) {
-                sold = true;
-            }
-        }
-
+        bool sold = ownerOf(tokenId) != owner();
         require(!sold, "ticket has already been sold or not exists!");
         _;
     }
@@ -245,7 +238,7 @@ contract ConcertTicket is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     }
 
     // 轉讓門票只能由本人操作，也就是擁有者
-    function transferOnlyTicketOwner(address to, uint256 tokenId) external {
+    function transferTicketOnlyOwner(address to, uint256 tokenId) external {
         safeTransferFrom(msg.sender, to, tokenId);
 
         // 轉讓後原本擁有者刪除 tokenId，目標 address 增加一個 tokenId
