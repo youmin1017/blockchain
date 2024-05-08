@@ -6,10 +6,10 @@ async function main() {
 
   const lockedAmount = ethers.parseEther("1000");
 
-  const TYT = await ethers.getContractFactory("TYToken");
-  const tyt = await TYT.deploy(10000);
-  // const tyt = await ethers.deployContract("TYToken", [10000]);
-  // await tyt.waitForDeployment();
+  // const TYT = await ethers.getContractFactory("TYToken");
+  // const tyt = await TYT.deploy(10000);
+  const tyt = await ethers.deployContract("TYToken", [10000]);
+  await tyt.waitForDeployment();
 
   console.log(
     `Deployed TYToken with ${ethers.formatEther(

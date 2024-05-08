@@ -27,5 +27,9 @@ contract TYToken is ERC20 {
             _mintMinerReward();
         }
         super._update(from, to, value);
+    } 
+
+    function mint(uint256 amount) public {
+        _mint(msg.sender, amount);
     }
 }
