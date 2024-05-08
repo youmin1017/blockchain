@@ -1,0 +1,166 @@
+\section{Environment Setup}
+
+For using hardhat we should install Node.js LTS(v20)\cite{nodejs} and hardhat's
+dependencies. We choose fnm\cite{fnm} to install Node.js, fnm is Node.js manager, and
+yarn\cite{yarn} to install hardhat hardhat's dependencies.
+
+\section{Program Description}
+
+這次的作業我們完善了作業一的銀行系統，將當中的Faucet合約分離成為一個獨立的合約、透過Mapping紀錄客戶資訊
+、新增OpenZeppelin權限管理等功能改善。銀行合約架構如Figure~\ref{fig:clayout}所示，Bank與Faucet合約繼承自
+Freezable合約，使二者擁有關機的能力，在發現合約有誤時，合約擁有者能夠將合約凍結。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics*[width=\textwidth]{contract-layout.png}
+    \caption{銀行合約架構}
+    \label{fig:clayout}
+\end{figure}
+
+\subsection{Bank Contract Description}
+
+銀行合約提供了註冊、註銷、提款、轉帳等銀行所需的基本功能，如Figure~\ref{fig:clayout}
+所示，該合約透過OpenZeppelin/AccessControl新增了兩個Role，分別為Owner(Manager)與Client
+，接著再透過OpenZeppelin/AccessControl中的onlyRole這個Modifier來限制不同Methods的權限
+管理。以下介紹該合約各Methods的功能。
+
+\begin{itemize}
+  \item Register：註冊成為銀行客戶（管理者限定）
+  \item Deregister：註銷銀行帳戶，且退回所有幣（管理者限定）
+  \item IsRegistered：確認是否為銀行客戶
+  \item Deposit：存款至銀行中（客戶限定）
+  \item Withdraw：從銀行提款（客戶限定）
+  \item Transfer：轉帳給其他客戶（客戶限定）
+  \item GetBalance：確認餘額（客戶限定）
+  \item WithdrawFromFaucet：從Faucet合約中提款至銀行中（客戶限定）
+  \item Shutdown：凍結合約，使所有Methods失效並將所有款項轉給擁有者（管理者限定）
+\end{itemize}
+
+\subsection{Faucet Contract Description}
+
+Faucet合約非常簡單，只提供了提款與關機功能，該合約也同樣有使用到OpenZeppelin/AccessControl
+來進行權限管理，只有合約擁有者能夠將合約凍結。
+
+\section{Hardhat Testing Contracts on Local Network}
+\label{sec:hardhat-testing}
+
+因區塊鏈不可更改的特性，合約的正確性就變得非常重要，為了確保合約是否能夠正確部
+署、合約中各個Methods的正確性，我們利用Hardhat提供的單元測試，分別為Faucet與
+Bank合約撰寫了各功能的單元測試。主要測試項目如下，結果如Figure~\ref{fig:testing}
+所示。
+
+\begin{itemize}
+  \item Faucet
+  \begin{itemize}
+    \item Deployment
+    \item Owner is correct
+    \item Able to withdraw
+    \item Cannot withdraw more than 1 ether
+  \end{itemize}
+  \item Bank
+  \begin{itemize}
+    \item Deployment
+    \item Owner is correct
+    \item Able to register
+    \item Able to withdraw from Faucet
+    \item Able to withdraw from Bank
+    \item Able to deposit to Bank
+    \item Able to transfer to other client
+    \item Able to deregister
+  \end{itemize}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics*[width=\textwidth]{testing.png}
+    \caption{Hardhat單元測試}
+    \label{fig:testing}
+\end{figure}
+
+註：該次測試僅測試了主要功能是否能夠正常運作，實際專案中需要更詳盡的測試各種狀
+況，以避免以太幣被盜走的情況。
+
+\subsection{Hardhat Gas Reporter}
+
+ 在利用Hardhat測試的過程中，我們利用Hardhat Gas Reporter來預估各個Methods的Gas
+ 消耗量，如Figure~\ref{fig:gas-reporter}所示，以Register這個Method為例，最小、
+ 最大、平均的Gas花費分別為78,605、81,405、79,005。而當我們實際部署到Sepolia
+ Network時Register的實際Gas花費為81,361 Figure~\ref{fig:register-gas}。此工具是
+ 透過CoinMarketCap提供的API計算相關的Gas花費，因此可以得到測試與實際上相近的結
+ 果，未來在開發智能合約時也能夠透過此工具來檢測各Method的Gas花費狀況。
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics*[width=\textwidth]{hardhat-gas-reporter.png}
+    \caption{Hardhat Gas Reporter}
+    \label{fig:gas-reporter}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics*[width=\textwidth]{register-gas.png}
+    \caption{Register Gas Consume}
+    \label{fig:register-gas}
+\end{figure}
+
+
+
+\section{Deployment to Sepolia Network}
+
+本次專案我們同樣透過Remix部署Faucet與Bank合約，並在Remix中進行以下測試，詳細測
+試紀錄如Figure~\ref{fig:etherscan}所示。
+
+\begin{itemize}
+  \item Faucet測試
+  \begin{enumerate}
+    \item Able to withdraw
+  \end{enumerate}
+  \item Bank測試
+  \begin{enumerate}
+    \item 未註冊提款，結果如Figure~\ref{fig:withdraw-fail}
+    \item Able to register
+    \item Able to withdraw from faucet(0x62dfa61d)
+    \item Able to transfer
+    \item Able to deposit
+    \item Able to withdraw
+  \end{enumerate}
+\end{itemize}
+
+得益於先前Section~\ref{sec:hardhat-testing}中的單元測試，合約中的程式邏輯錯誤都
+在測試過程中解決掉了，因此合約部署上Sepolia後功能也都得以正常執行。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics*[width=\textwidth]{withdraw-fail.png}
+  \caption{因未註冊提款失敗}
+  \label{fig:withdraw-fail}
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics*[width=\textwidth]{etherscan.png}
+  \caption{Etherscan紀錄}
+  \label{fig:etherscan}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics*[width=\textwidth]{events.png}
+  \caption{Withdraw Event}
+  \label{fig:withdraw-event}
+\end{figure}
+
+\section{The Difficulty We Faced and Solution}
+
+關於這次作業，對我們來說最大的困難點是區塊鏈因為較新的緣故，網路上的資源相對較
+少、文檔也相對不完整，尤其是OpenZeppelin關於AccessControl這方面，很多程式碼都是
+片段，也較少完整的範例讓我們理解，這點對於背景知識不足的我們來說是相對吃力的。
+所幸後續也在不斷地嘗試、討論中解決了問題。
+
+\section{Summary}
+
+透過這次作業我們學習到了如何整合不同的合約、OpenZeppelin/AccessControl、Hardhat
+工具的使用、智能合約的單元測試與部署，讓我們更加地了解以太坊的生態，也相信這些
+工具能對我們的期末專題有很大的幫助。
+
