@@ -36,9 +36,8 @@
 \setcounter{secnumdepth}{4}
 
 
-\title{Homework-2: Programming a better Faucet contract using Hardhat (on
-Hardhat Network and Sepolia)}
-\author{123吳侑珉 109321021、涂价弘 109321019}
+\title{Homework-3: Programming an ERC20 Token contract (Using Hardhat/OpenZeppelin)}
+\author{吳侑珉 109321021、涂价弘 109321019}
 \begin{document} \date{} \maketitle
 
 \tableofcontents
@@ -47,10 +46,11 @@ Hardhat Network and Sepolia)}
 
 \section{Abstract}
 
-延續作業一銀行管理系統的智能合約，將其從一份大合約拆分成多份小合約、透過
-Openzeppelin\cite{openzeppelin}進行Access Control管理銀行管理員與客戶、透過自訂的Freezable使銀行合
-約能夠關機、透過Hardhat\cite{hardhat}進行Local Network的合約測試與部署，並且利用Hardhat Gas
-Reporter\cite{hardhat-gas-reporter}來觀察合約的部署與函式Gas花費狀況。
+本次作業我們透過OpenZeppelin\cite{openzeppelin} 中的ERC20實作屬於我們的
+\cite{erc-20} Token。此外我們也將前兩次作業中完成的BankFaucet合約加以修改，讓該
+合約能夠管理本次新增的Token。與前次作業相同，完成合約的功能後，我們同樣利用
+Hardhat測試我們所的功能是否正確運作。最後再透過Hardhat Ignition
+\cite{hardhat-ignition}部署我們的合約至Sepolia測試網路中。
 
 % \section{}
 
