@@ -1,0 +1,70 @@
+\documentclass[12pt,a4paper]{article}
+
+% xeCJK
+\usepackage[]{xeCJK}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Times New Roman}
+\xeCJKDeclareSubCJKBlock{SIP}{
+    "73C9 -> "73C9, % 珉
+}
+\setCJKmainfont[]{Noto Serif TC}
+\setCJKmainfont[SIP, Path=fonts/]{NotoSerifTC-Regular-Subset.otf}
+\setCJKmonofont[]{Noto Serif TC}
+
+% Set image path
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{float}
+\usepackage{url}
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage[backend=bibtex,sorting=nty]{biblatex}
+\addbibresource{ref.bib}
+
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{4}
+
+
+\title{Homework-5 and 6: Programming a smart contract using Chainlink Oracles And Next.js Frontend}
+\author{吳侑珉 109321021、涂价弘 109321019}
+\begin{document} \date{} \maketitle
+
+\tableofcontents
+
+\pagebreak
+
+\section{Abstract}
+
+本次作業我們利用Chainlink Oracles中的VRF2.5(Verifiable Random Function)實作一個
+隨機在20個房名中選擇一個房名的智能合約。此外我們也利用Next.js實作一個前端網頁，
+讓使用者能夠透過網頁與智能合約互動。
+
+% \section{}
+
+\input{chapter1.tex}
+
+% Image Example
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics*[width=\textwidth]{CPE.jpeg}
+%     \caption{CPE證明}
+%     \label{fig:cpe}
+% \end{figure}
+
+% This is citation example\cite{ioi}
+
+\pagebreak
+\printbibliography
+
+\end{document}
