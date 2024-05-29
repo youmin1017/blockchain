@@ -1,0 +1,110 @@
+\section{Environment Setup}
+
+For using hardhat we should install Node.js LTS(v20)\cite{nodejs} and hardhat's
+dependencies. We choose fnm\cite{fnm} to install Node.js, fnm is Node.js
+manager which makes installing specific version of Node.js easily, and
+yarn\cite{yarn} to install hardhat hardhat's dependencies. Moreover, in this
+homework we use yarn's workspace feature to manage our project, so we only need
+to run yarn install in the project root directory to install all dependencies.
+
+\subsection{Frontend Dependencies}
+
+\begin{itemize}
+  \item @walletconnect/web3wallet: The Web3Modal SDK allows us to easily
+  connect your Web3 app with wallets.
+  \item @web3modal/ethers: For interacting with Ethereum smart contracts.
+  \item tailwindcss: A utility-first CSS framework for rapidly building custom
+  designs.
+  \item shadcn-ui: React components
+\end{itemize}
+
+\section{Program Description}
+
+本次作業因使用到了Chainlink中的VRF功能，我們必須先透過Chainlink提供的Faucet取得
+測試用的LINK，並新增VRF的Subscription，取得Subscription ID。接著我們設計了一個
+智能合約，透過Chainlink VRF產生一個隨機數字，並將該數字與20取餘數，回傳一個在預
+先定義好的Houses Array中取得房名。最後我們透過Next.js實作了一個前端網頁，讓使用
+者能夠透過網頁與智能合約互動。
+
+\subsection{VRF Random House Generator Contract}
+
+\subsubsection{VRF Random House Generator Methods}
+
+\begin{itemize}
+  \item \textbf{constructor}: Initialize the contract with subscription id
+  which is used to subscribe to Chainlink VRF. 
+  \item \textbf{rollDice}: Request a random number from Chainlink VRF.
+  \item \textbf{house}: Return the house name of given address.
+  \item \textbf{fulfillRandomWords}: Callback function for Chainlink VRF.
+  \item ... (other not important methods)
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics*[width=0.55\textwidth]{remix-contract.png}
+    \caption{WalletConnect}
+    \label{fig:remix-contract}
+\end{figure}
+
+
+\subsubsection{具體實作流程如下}
+
+\begin{enumerate}
+  \item 首先，在Chainlink提供的Faucet中取得測試用的LINK。
+  \item 接著在Chainlink的VRF中註冊一個Subscription，取得Subscription ID。
+  \item 部署合約時，將Subscription ID作為參數傳入。
+  \item 合約部署完成後，在Chainlink中，將該合約的地址註冊為Consumer。
+  \item 使用者呼叫rollDice函數，合約會向Chainlink VRF發送請求。
+  \item Chainlink VRF回傳隨機數字後，合約會將該數字與20取餘數，並將結果儲存。
+  \item 使用者呼叫house函數，合約會回傳該使用者的房名。
+\end{enumerate}
+
+\subsection{Next.js Frontend}
+
+本作業中，我們使用Next.js實作了一個簡單的前端網頁，讓使用者能夠連接Metamask、
+WalletConnect等錢包Figure~\ref{fig:frontend-connect}，並透過網頁與智能合約互動。
+使用者可以透過網頁呼叫rollDice函數，並透過呼叫house函數取得自己的房名。如
+Figure~\ref{fig:demo}所示右上角為已經連接到Metamask錢包，並可透過Disconnect按鈕
+斷開連接;左下角三個按鈕分別為Get Owner、Roll Dice、Get House，分別對應到智能合
+約中的owner、rollDice、house函數;右下角則為按下Get House後成功呼叫合約中的house
+method，取得隨機骰到的房子名稱。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics*[width=0.50\textwidth]{frontend-connect.png}
+    \caption{WalletConnect}
+    \label{fig:frontend-connect}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics*[width=0.8\textwidth]{frontend-house.jpeg}
+    \caption{WalletConnect}
+    \label{fig:demo}
+\end{figure}
+
+
+\section{The Difficulty We Faced and Solution}
+
+在本次作業中，收先，我們遇到最大的困難是在今年的四月29日(2024/04/29），VRF剛剛
+更新為2.5版本Figure~\ref{fig:vrf2.5-news}，而導致跟以往的作業相比，網路上的資訊
+又更少了，甚至以英文作為關鍵字的資訊也是少之又少，所幸Chainlink的官方文檔還算完
+整，讓我們成功完成了基於VRF2.5隨機產生房名的智能合約。接著我們遇到最大的問題是
+如何在前端連接錢包、與智能合約互動，這部分我們參考了WalletConnect的官方文檔，該
+文檔提供了相當高品質的範例程式碼，讓我們成功地完成了前端的部分。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics*[width=\textwidth]{chainlink-vrf2.5-news.png}
+    \caption{VRF2.5 news}
+    \label{fig:vrf2.5-news}
+\end{figure}
+
+\section{Summary}
+
+這次作業我們成功地利用Chainlink取得了一個Verifiable的Random Number，也理解到了
+在區塊鏈的世界中，該如何取得一個真正的隨機數字。此外，我們也成功地利用Next.js實
+作了一個前端網頁，讓使用者能夠透過網頁與智能合約互動。這次作業讓我們更加熟悉了
+智能合約的開發流程，為我們的期末專期打下了良好的基礎。
+

@@ -1,35 +1,19 @@
 {
-  "license": "UNLICENSED",
+  "name": "bc-wks",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
   "scripts": {
-    "compile": "bunx hardhat compile",
-    "test": "bunx hardhat test"
+    "web-dev": "yarn workspace @bc-wks/frontend dev"
   },
-  "dependencies": {
-    "@openzeppelin/contracts": "^5.0.2",
-    "dotenv": "^16.4.5"
-  },
-  "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
-    "@nomicfoundation/hardhat-ethers": "^3.0.5",
-    "@nomicfoundation/hardhat-ignition": "^0.15.1",
-    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.1",
-    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
-    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "@nomicfoundation/hardhat-verify": "^2.0.5",
-    "@nomicfoundation/ignition-core": "^0.15.1",
-    "@typechain/ethers-v6": "^0.5.0",
-    "@typechain/hardhat": "^9.0.0",
-    "@types/chai": "^4.2.0",
-    "@types/debug": "^4.1.12",
-    "@types/mocha": ">=9.1.0",
-    "@types/node": ">=18.0.0",
-    "chai": "^4.2.0",
-    "ethers": "^6.11.1",
-    "hardhat": "^2.22.2",
-    "hardhat-gas-reporter": "^2.1.1",
-    "solidity-coverage": "^0.8.0",
-    "ts-node": ">=8.0.0",
-    "typechain": "^8.3.0",
-    "typescript": ">=4.5.0"
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/hardhat",
+      "**/hardhat/**",
+      "**"
+    ]
   }
 }
