@@ -1,0 +1,21 @@
+{
+  "name": "40% OFF Coupon",
+  "description": "This coupon gives you 40% off your next purchase.",
+  "image": "https://ipfs.io/ipfs/QmUXKLpobDinsyrPtRDPGxPqPuw1M82ztzxC7ekegxv54Q/40off.png",
+  "external_url": "https://ipfs.io/ipfs/QmUXKLpobDinsyrPtRDPGxPqPuw1M82ztzxC7ekegxv54Q/40off.png",
+  "attributes": [],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "40% OFF Coupon"
+    },
+    "description": {
+      "type": "string",
+      "description": "This coupon gives you 40% off your next purchase."
+    },
+    "image": {
+      "type": "string",
+      "description": "https://ipfs.io/ipfs/QmUXKLpobDinsyrPtRDPGxPqPuw1M82ztzxC7ekegxv54Q/40off.png"
+    }
+  }
+}

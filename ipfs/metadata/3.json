@@ -1,0 +1,21 @@
+{
+  "name": "50% OFF Coupon",
+  "description": "This coupon gives you 50% off your next purchase.",
+  "image": "https://ipfs.io/ipfs/QmUXKLpobDinsyrPtRDPGxPqPuw1M82ztzxC7ekegxv54Q/50off.png",
+  "external_url": "https://ipfs.io/ipfs/QmUXKLpobDinsyrPtRDPGxPqPuw1M82ztzxC7ekegxv54Q/50off.png",
+  "attributes": [],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "50% OFF Coupon"
+    },
+    "description": {
+      "type": "string",
+      "description": "This coupon gives you 50% off your next purchase."
+    },
+    "image": {
+      "type": "string",
+      "description": "https://ipfs.io/ipfs/QmUXKLpobDinsyrPtRDPGxPqPuw1M82ztzxC7ekegxv54Q/50off.png"
+    }
+  }
+}
