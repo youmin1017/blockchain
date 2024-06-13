@@ -1,0 +1,114 @@
+\section{Environment Setup}
+
+本專題我們使用Next.js作為我們WEB3 Restaurant的前端與後端Framework，並使用Hardhat
+工具開發相關的智能合約，以下詳細說明我們所使用到的工具。
+
+\subsection{Frontend Dependencies}
+
+\begin{itemize}
+  \item @walletconnect/web3wallet: The Web3Modal SDK allows us to easily
+  connect your Web3 app with wallets.
+  \item @web3modal/ethers: For interacting with Ethereum smart contracts.
+  \item tailwindcss: A utility-first CSS framework for rapidly building custom
+  designs.
+  \item shadcn-ui: React components
+\end{itemize}
+
+\subsection{Blockchain Technologies}
+
+\begin{itemize}
+  \item Pinata: 用於管理我們在IPFS（星際檔案系統）上的檔案
+  \item Hardhat: Ethereum development environmen
+  \item OpenZepplin: Smart contract Library
+\end{itemize}
+
+\section{Program Description}
+
+本專題主要包含兩個部分，分別為智能合約與網頁前後端。首先是智能合約部分，我們的餐聽
+系統有兩個合約，分別為NFT優惠券合約與餐廳管理合約，網頁前後端的部分擇使用Next.js框架
+實作，Figure~\ref{fig:architecture}為本專案的架構圖。
+
+\begin{figure}
+  \centering
+  \includegraphics*[width=0.75\textwidth]{architecture.png}
+  \caption{Project Architecture}
+  \label{fig:architecture}
+\end{figure}
+
+\subsection{Restaurant Contracts}
+
+\subsubsection{Restaurant NFT Coupon Contract With ERC1155}
+
+本次專題利用ERC1155製作了擁有餘額概念的NFT，相比於ERC721每個Token都是獨一無二的，
+使用ERC1155製作優惠券更加符合我們的需求，使用ERC1155我們就可以讓我們就可以一次
+鑄造多張優惠券，再將優惠券分別分給不同的客戶。此外我們還利用Pinata將我們的優惠
+券圖片與相關的Metadata上傳至IPFS中，在前端我們就可以透過讀取Metadata將這我們製
+作的優惠券顯示在前端中。上傳成功後的結果如Figure~\ref{fig:ipfs}所示，此外我們的
+NFT也能夠在OpenSea的測試網中看到，如Figure~\ref{fig:opensea}所示，能夠看到我們
+優惠券的樣式與剩餘數量。
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics*[width=0.75\textwidth]{ipfs.png}
+  \caption{IPFS}
+  \label{fig:ipfs}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics*[width=0.75\textwidth]{opensea.png}
+  \caption{OpenSea}
+  \label{fig:opensea}
+\end{figure}
+
+\begin{quote}
+``Coupon NFT Address: Oxb561B7A33B0ef3b7fa6117C39F940E656d0516ab``
+\end{quote}
+
+
+\subsubsection{Restaurant Management Contract}
+
+餐廳管理合約主要負責管理餐廳的資訊，包括座位管理、點餐系統、優惠券功能。在使用
+優惠券訂餐時，我們會先檢查使用者的優惠券數量，若數量足夠，則會呼叫Coupon合約中的
+useCoupon函數，來使用優惠券。此外本次專題中我們實作的合約都有利用到OpenZepplin的
+AccessControl，來管理合約的權限，讓我們的合約更加安全。
+
+\subsection{Next.js Frontend}
+
+本專題我們使用Next.js作為我們的前端框架，該網頁能夠使用WalletConnect來連接錢包，
+登入後如果為管理員可以透過優惠券管理頁面來管理優惠券，如發送優惠券給使用者，如
+Figure~\ref{fig:coupon-manage}所示。一般客人則可以透過網頁來點餐，使用優惠券，
+如Figure~\ref{fig:demo}所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics*[width=0.75\textwidth]{coupon-manage.png}
+  \caption{Coupon Management}
+  \label{fig:coupon-manage}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics*[width=0.75\textwidth]{demo.png}
+  \caption{Demo}
+  \label{fig:demo}
+\end{figure}
+
+\section{The Difficulty We Faced and Solution}
+
+本次專題中，我們原先想延續先前的作業，使用ERC721來製作優惠券，但後來發現ERC721
+所製作的NFT每個Token都是獨一無二的，這樣的設計令我一張優惠券只能發送給一個使用
+者，非常的不方便，好在後來在OpenZepplin的官方文檔中找到了ERC1155，這個標準可以
+讓我們的NFT有餘額的概念，這樣我們就可以一次鑄造多張優惠券，再將優惠券分給不同的
+客戶，這樣的設計更加符合我們的需求。然而因為時間上的關係，整體網頁還有許多進步
+的空間，例如新增Loading畫面、新增NFT優惠券，這些都是我們未來可以進一步改進的地
+方。
+
+\section{Summary}
+
+本次專題我們實作了一個WEB3 Restaurant，使用ERC1155製作了擁有餘額概念的NFT優惠券，
+並使用Next.js作為我們的前端框架，透過WalletConnect來連接錢包，讓使用者可以透過錢包
+來登入，並使用優惠券來點餐。此外我們也使用了Hardhat來開發智能合約，並使用Pinata
+來管理我們在IPFS上的檔案，讓我們的NFT優惠券能夠在前端中顯示。整體來說，本次專題
+讓我們學習到了許多WEB3的相關技術，也讓我們更加熟悉智能合約的開發。
