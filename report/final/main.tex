@@ -1,0 +1,71 @@
+\documentclass[12pt,a4paper]{article}
+
+% xeCJK
+\usepackage[]{xeCJK}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Times New Roman}
+\xeCJKDeclareSubCJKBlock{SIP}{
+    "73C9 -> "73C9, % 珉
+}
+\setCJKmainfont[]{Noto Serif TC}
+\setCJKmainfont[SIP, Path=fonts/]{NotoSerifTC-Regular-Subset.otf}
+\setCJKmonofont[]{Noto Serif TC}
+
+% Set image path
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{float}
+\usepackage{url}
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage[backend=bibtex,sorting=nty]{biblatex}
+\addbibresource{ref.bib}
+
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt
+
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{4}
+
+
+\title{Term Project Report: WEB3 Restaurant}
+\author{吳侑珉 109321021、涂价弘 109321019}
+\begin{document} \date{} \maketitle
+
+\tableofcontents
+
+\pagebreak
+
+\section{Abstract}
+
+區塊鏈這門課，我們選擇了一個比較有趣的主題，就是「WEB3 Restaurant」。我們透過區
+塊鏈技術結合網頁前後端技術，讓使用者不需要理解區塊鏈的技術細節也能夠參與區塊鏈、
+與區塊鏈互動。本專題我們主要提供了兩個功能，一個是點餐系統，另一個是NFT優惠券系
+統，管理員能夠發送優惠券給客戶，使用者則可以透過區塊鏈技術來點餐、使用優惠券。
+
+% \section{}
+
+\input{chapter1.tex}
+
+% Image Example
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics*[width=\textwidth]{CPE.jpeg}
+%     \caption{CPE證明}
+%     \label{fig:cpe}
+% \end{figure}
+
+% This is citation example\cite{ioi}
+
+\pagebreak
+\printbibliography
+
+\end{document}
